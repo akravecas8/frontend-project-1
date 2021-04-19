@@ -18,3 +18,6 @@ fetch(BASE_URL)
 
 //     document.getElementById("farm-bar").append(farmsSpan)
 // }
+
+
+//shit to add
