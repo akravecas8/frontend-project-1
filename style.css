@@ -8,12 +8,12 @@
     border: 1px solid blue;
   }
 
-  #Davids shit {
-    height: 80%;
-    width: 8vw;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 2em;
-    border: 1px solid blue;
+  #Davids span {
+    height: 55%;
+    width: 5px;
+    display: center;
+    justify-content: auto;
+    align-items: auto;
+    border-radius: 5px;
+    border: 2px dotted red;
   }
