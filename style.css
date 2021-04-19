@@ -1,1 +1,9 @@
-
+#farm-bar span {
+    height: 80%;
+    width: 8vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 2em;
+    border: 1px solid blue;
+  }
