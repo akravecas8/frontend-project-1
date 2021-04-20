@@ -5,7 +5,7 @@ fetch(BASE_URL)
     // .then (data => console.log(data))
     .then (data => data.forEach((farms) => {
         renderFarms(farms)
-        renderProduce(farms)
+        renderProduce(farms.produce)
     }))
 
 // function renderFarms(farms) {
@@ -30,6 +30,9 @@ function renderFarms(farms) {
 
     const farmName = document.createElement("h3")
           farmName.innerText = farms.name
+          farmName.addEventListener("click", (e) => {
+              e.preventDefault()
+          })
     
     const farmImg = document.createElement("image")
           farmImg.src = farms.image
@@ -37,22 +40,22 @@ function renderFarms(farms) {
     document.getElementById("spanny").append(farmName, farmImg)
 }
 
-function renderProduce(farms) {
+function renderProduce(produce) {
 
     const produceName = document.createElement("h2")
-          produceName.innerText = farms.produce.name
+          produceName.innerText = produce.produceName
     const produceAvail = document.createElement("h3")
           produceAvail
-            if (farms.produce.available === true) {
+            if (produce.available === true) {
                 produceAvail.innerText = "In Stock"
             }
             else "Out of Stock"
     const produceQuant = document.createElement("h3")
-          produceQuant.innerText = farms.produce.quantity
+          produceQuant.innerText = produce.quantity
     const producePrice = document.createElement("h3")
-          producePrice.innerText = farms.produce.cost
+          producePrice.innerText = produce.cost
     // const produceImage = document.createElement("image")
-    //       produceImage.src = farms.produce.Image
+    //       produceImage.src = produce.produceImage
     
     document.getElementById("produce").append(produceName, produceAvail, produceQuant, producePrice)
 }
