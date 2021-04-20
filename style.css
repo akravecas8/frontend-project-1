@@ -1,4 +1,4 @@
-#farm-bar span {
+#farm-bar{
     height: 80%;
     width: 8vw;
     display: flex;
@@ -8,12 +8,3 @@
     border: 1px solid blue;
   }
 
-  #Davids span {
-    height: 55%;
-    width: 5px;
-    display: center;
-    justify-content: auto;
-    align-items: auto;
-    border-radius: 5px;
-    border: 2px dotted red;
-  }
