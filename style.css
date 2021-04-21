@@ -1,11 +1,51 @@
 #navvy span {
-    height: 80%;
-    width: 8vw;
-    display: flex;
-    justify-content: auto;
-    align-items: auto;
-    border-radius: 2em;
-    border: 1px solid blue;
-  }
-
+  font-size: 20px;
+  height: 80%;
+  width: 15vw;
+  display: inline-flex;
+  justify-content: center;
+  align-content: center;
+  align-items: auto;
+  margin: auto;
+  border-radius: 4em;
+  border: 2px #cd3c2a solid;
+}
   
+.box {
+  border: 2px #cd3c2a solid;
+  width: 200px;
+  align-content: center;
+  text-align: center;
+  padding: 5px;
+  margin: 5px 5px;
+  background: #eae6da;
+  display: inline-block;
+}
+  
+image {
+  height: auto;
+  width: auto;
+}
+
+#add-produce {
+  border: 2px #cd3c2a solid;
+  width: 250px;
+  justify-content: center;
+  align-content: center;
+  text-align: center;
+  padding: 4px;
+  margin: auto;
+  background: #eae6da;
+}
+
+.add-produce-form {
+  padding: 2px;
+}
+
+form {
+  padding: 3px;
+}
+
+button {
+  padding: 2px;
+}
