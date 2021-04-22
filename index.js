@@ -7,8 +7,7 @@ fetch(FARMS_URL)
     .then (res => res.json())
     .then (data => data.forEach((farms) => {
         renderFarms(farms)
-        console.log(farms.produce)
-    }))
+}))
 
 function renderFarms(farms) {
 
@@ -16,8 +15,9 @@ function renderFarms(farms) {
           farmSpan.id = farms.id
     const farmName = document.createElement("h3")
           farmName.innerText = farms.name        
-    const farmImg = document.createElement("image")
+    const farmImg = document.createElement("img")
           farmImg.src = farms.image
+          farmImg.className = "farmImg"
                 
     farmSpan.append(farmName, farmImg)          
     document.getElementById("navvy").append(farmSpan)
@@ -26,6 +26,7 @@ function renderFarms(farms) {
             renderProduce(farms)
 
             const createBtnId = document.querySelector(".create-item-button")
+                  createBtnId.id = ""
                   createBtnId.id = farms.id
     })  
 
@@ -33,7 +34,7 @@ function renderFarms(farms) {
 }
 
 function renderProduce(farms) {
-    // console.log(farms)
+
     document.querySelector("#produce").innerHTML = ""
 
     for (i=0; i < farms.produce.length; i++) {
@@ -46,21 +47,30 @@ function renderProduce(farms) {
               produceName.innerText = farms.produce[i].produceName
         const produceAvail = document.createElement("h3")
               produceAvail
-                if (farms.produce[i].available === true) {
+                if (farms.produce[i].available == "yes") {
                     produceAvail.innerText = "In Stock"
                     }
                 else produceAvail.innerText = "Out of Stock"
         const produceQuant = document.createElement("h3")
-              produceQuant.innerText = farms.produce[i].quantity
+              produceQuant
+                if (produceAvail.innerText === "In Stock") {
+                    produceQuant.innerText = `Quantity: ${farms.produce[i].quantity}`
+                    }
+                else produceQuant.innerText = "--"
         const producePrice = document.createElement("h3")
-              producePrice.innerText = farms.produce[i].cost
+              producePrice
+                if (produceAvail.innerText === "In Stock") {
+                    producePrice.innerText = `Price: $${farms.produce[i].cost}`
+                    }
+                else producePrice.innerText = "N/A"
         const produceImage = document.createElement("image")
               produceImage.src = produce.produceImage
 
         const addToCartButton = document.createElement("button")
               addToCartButton.innerText = "Add to Cart"
+              addToCartButton.id = itemCard.id
               addToCartButton.addEventListener("click", (e) =>{
-                    fillCart(e)
+                    fillCart(e, farms)
               })
 
         const updateButton = document.createElement("button")
@@ -75,62 +85,88 @@ function renderProduce(farms) {
               deleteButton.id = itemCard.id
               deleteButton.addEventListener("click", (e) =>{
                     e.preventDefault()
+
+                    const farmId = farms.id
+                    const cardId = e.target.id
+
+                    const farmsProduce = [... farms.produce]
+                    farmsProduce.splice(cardId, 1)
+
+                    const spreadNewProduce = {
+                        produce: farmsProduce
+                    }
+
+                    const newObj = {
+                        headers: {"Content-Type": "application/json"},
+                        method: "PATCH",
+                        body: JSON.stringify(spreadNewProduce),
+                    }
+
+                    fetch(FARMS_URL+farmId, newObj)
+                        .then(res => res.json())
+                        .then(function(data){
+                             renderProduce(data)
+                    })
               })
        
         itemCard.append(produceName, produceAvail, produceQuant, producePrice, produceImage, addToCartButton, updateButton, deleteButton)    
         document.getElementById("produce").append(itemCard)
-        }
+    }
 }
 
 function addProduceItem(e, farms) {
     e.preventDefault()
 
-    const id = e.target[4].id
+    const farmId = e.target[5].id
 
     const addNewProduce = {
         produceName: e.target[0].value,
         available: e.target[1].value,
-        quantity: e.target[2].value,
-        cost: e.target[3].value,
+        quantity: +e.target[2].value,
+        cost: +e.target[3].value,
         produceImage: e.target[4].value,
     }
 
-    const x = [... farms.produce]
-    x.push(addNewProduce)
+    const spread = [... farms.produce]
+    spread.push(addNewProduce)
 
-    const spanNewProduce = {
-        produce: x
+    const spreadNewProduce = {
+        produce: spread
     }
 
     const newObj = {
         headers: {"Content-Type": "application/json"},
         method: "PATCH",
-        body: JSON.stringify(spanNewProduce),
+        body: JSON.stringify(spreadNewProduce),
     }
-
-    fetch(FARMS_URL+id, newObj)
+    console.log(farmId)
+    fetch(FARMS_URL+farmId, newObj)
         .then(res => res.json())
         .then(function(data){
-            // document.querySelector("#produce").innerHTML=""
             renderProduce(data)
     })
 }
 
-// function fillCart(e) {
-    
-//     const cartObj = {"name":e.target.id, "cost":e.target.class, "qty":1}
-//     const qty = cartObj.qty
-//     const newQty = qty + 1
+function fillCart(e, farms) {
 
-//     if (checkoutCart.indexOf("name") !== e.target.id)   
-//        (checkoutCart.push(cartObj))
-//     else iterateCart()
+    // const farmsId = farms.id
+    const cardId = e.target.id
 
-//     function iterateCart() {
-//         for (i=0; i<checkoutCart.length; i++) {
-//             if (checkoutCart.name === e.target.id)
-//                 checkoutCart.qty = newQty
-//             else console.log("I didn't increment qty")
-//         }  
-//     }
-// }
+    const spread = [... farms.produce]
+    const addItem = spread.splice(cardId, 1)
+
+    const cartObj = {"name":addItem[0]["produceName"], "cost":addItem[0]["cost"], "qty":1}
+    // const qty = cartObj.qty
+    // const newQty = qty + 1
+    debugger
+
+    if (checkoutCart.indexOf("name") !== e.target.id)   
+       (checkoutCart.push(cartObj))
+    else iterateCart()
+
+    function iterateCart() {
+        for (i=0; i<checkoutCart.length; i++) {
+           const checkoutName = ""
+        }
+    }
+}
