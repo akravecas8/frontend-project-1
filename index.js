@@ -71,9 +71,9 @@ function renderProduce(farms) {
 
         const updateButton = document.createElement("button")
               updateButton.innerText = "Update Item"
-                    itemCard.addEventListener("click", (e) => {
-                        updateButton.id = e.target.id
-                        document.querySelector(".update-form").id = updateButton.id
+              updateButton.id=itemCard.id
+                    updateButton.addEventListener("click", (e) => {
+                        document.querySelector(".update-form").id = e.target.id
                     })
               updateButton.addEventListener("click", (e) => {
                 //   debugger
