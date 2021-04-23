@@ -71,16 +71,19 @@ function renderProduce(farms) {
 
         const updateButton = document.createElement("button")
               updateButton.innerText = "Update Item"
-              updateButton.id = itemCard.id
-              updateButton.addEventListener("click", () => {
-                    const update = document.querySelector(".update-form")
-                          update.id = ""
-                          update.id = itemCard.id
-                            if (update.style.display === "none") {
-                                update.style.display = "block";} 
-                            else {
-                                update.style.display = "none";}
-                            })       
+                    itemCard.addEventListener("click", (e) => {
+                        updateButton.id = e.target.id
+                        document.querySelector(".update-form").id = updateButton.id
+                    })
+              updateButton.addEventListener("click", (e) => {
+                //   debugger
+                    const update = document.querySelector("#update-produce-form")
+                        if (update.style.display === "none") {
+                            update.style.display = "block";} 
+                        else {
+                            update.style.display = "none";}
+                            })
+
         const deleteButton = document.createElement("button")
               deleteButton.innerText = "Delete Item"
               deleteButton.id = itemCard.id
@@ -153,7 +156,10 @@ function updateProduceItem(farms) {
     e.preventDefault()
     //farm ID
     //produce card ID
-    //
+        const updateProduceForm = document.querySelector(".update-form")   
+              updateProduceForm.id = ""
+              updateProduceForm.id = itemCard.id
+
         const farmId = farms.id
         const cardId = e.target[5].id
         debugger
