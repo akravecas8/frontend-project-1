@@ -7,7 +7,7 @@ fetch(FARMS_URL)
     .then (res => res.json())
     .then (data => data.forEach((farms) => {
         renderFarms(farms)
-}))
+    }))
 
 function renderFarms(farms) {
 
@@ -26,10 +26,9 @@ function renderFarms(farms) {
             renderProduce(farms)
 
             const createBtnId = document.querySelector(".create-item-button")
-                  createBtnId.id = ""
-                  createBtnId.id = farms.id
+                createBtnId.id = ""
+                createBtnId.id = farms.id
     })  
-
     document.getElementById("add-produce-form").addEventListener("submit", (e) => addProduceItem(e, farms))
 }
 
@@ -48,20 +47,17 @@ function renderProduce(farms) {
         const produceAvail = document.createElement("h3")
               produceAvail
                 if (farms.produce[i].available == "yes") {
-                    produceAvail.innerText = "In Stock"
-                    }
+                    produceAvail.innerText = "In Stock"}
                 else produceAvail.innerText = "Out of Stock"
         const produceQuant = document.createElement("h3")
               produceQuant
                 if (produceAvail.innerText === "In Stock") {
-                    produceQuant.innerText = `Quantity: ${farms.produce[i].quantity}`
-                    }
+                    produceQuant.innerText = `Quantity: ${farms.produce[i].quantity}`}
                 else produceQuant.innerText = "--"
         const producePrice = document.createElement("h3")
               producePrice
                 if (produceAvail.innerText === "In Stock") {
-                    producePrice.innerText = `Price: $${farms.produce[i].cost}`
-                    }
+                    producePrice.innerText = `Price: $${farms.produce[i].cost}`}
                 else producePrice.innerText = "N/A"
         const produceImage = document.createElement("image")
               produceImage.src = produce.produceImage
@@ -76,6 +72,16 @@ function renderProduce(farms) {
         const updateButton = document.createElement("button")
               updateButton.innerText = "Update Item"
               updateButton.id = itemCard.id
+              updateButton.addEventListener("click", () => {
+                    const update = document.getElementById("update-produce");
+                        //   update.id = ""
+                        //   update.id = itemCard.id
+                            if (update.style.display === "none") {
+                                update.style.display = "block";} 
+                            else {
+                                update.style.display = "none";}
+                            })
+                            // debugger
               updateButton.addEventListener("click", (e) =>{
                     e.preventDefault()
               })
@@ -107,7 +113,7 @@ function renderProduce(farms) {
                         .then(function(data){
                              renderProduce(data)
                     })
-              })
+               })
        
         itemCard.append(produceName, produceAvail, produceQuant, producePrice, produceImage, addToCartButton, updateButton, deleteButton)    
         document.getElementById("produce").append(itemCard)
@@ -158,7 +164,6 @@ function fillCart(e, farms) {
     const cartObj = {"name":addItem[0]["produceName"], "cost":addItem[0]["cost"], "qty":1}
     // const qty = cartObj.qty
     // const newQty = qty + 1
-    debugger
 
     if (checkoutCart.indexOf("name") !== e.target.id)   
        (checkoutCart.push(cartObj))
@@ -171,6 +176,3 @@ function fillCart(e, farms) {
     }
 }
 
-//some random shit
-//hello
-//yo
