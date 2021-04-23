@@ -183,28 +183,29 @@ function updateProduceItem(farms) {
             .then(function(data){
                 renderProduce(data)
         })
-    // }) 
+    }) 
 }
 
-function fillCart(e, farms) {
+// function fillCart(e, farms) {
 
-    // const farmsId = farms.id
-    const cardId = e.target.id
+//     // const farmsId = farms.id
+//     const cardId = e.target.id
 
-    const spread = [... farms.produce]
-    const addItem = spread.splice(cardId, 1)
+//     const spread = [... farms.produce]
+//     const addItem = spread.splice(cardId, 1)
 
-    const cartObj = {"name":addItem[0]["produceName"], "cost":addItem[0]["cost"], "qty":1}
-    // const qty = cartObj.qty
-    // const newQty = qty + 1
+//     const cartObj = {"name":addItem[0]["produceName"], "cost":addItem[0]["cost"], "qty":1}
+//     // const qty = cartObj.qty
+//     // const newQty = qty + 1
 
-    if (checkoutCart.indexOf("name") !== e.target.id)   
-       (checkoutCart.push(cartObj))
-    else iterateCart()
+//     if (checkoutCart.indexOf("name") !== e.target.id)   
+//        (checkoutCart.push(cartObj))
+//     else iterateCart()
 
-    function iterateCart() {
-        for (i=0; i<checkoutCart.length; i++) {
-           const checkoutName = ""
-        }
-    }
-}
+//     function iterateCart() {
+//         for (i=0; i<checkoutCart.length; i++) {
+//            const checkoutName = ""
+//         }
+//     }
+// }
+
