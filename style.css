@@ -54,6 +54,17 @@ span {
   background: #eae6da;
 }
 
+.update-form {
+  border: 2px #045f39 solid;
+  width: 250px;
+  justify-content: center;
+  align-content: center;
+  text-align: center;
+  padding: 4px;
+  margin: auto;
+  background: #eae6da;
+}
+
 #update-produce {
   border: 2px #045f39 solid;
   width: 250px;

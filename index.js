@@ -26,10 +26,10 @@ function renderFarms(farms) {
             renderProduce(farms)
 
             const createBtnId = document.querySelector(".create-item-button")
-                createBtnId.id = ""
-                createBtnId.id = farms.id
+                  createBtnId.id = ""
+                  createBtnId.id = farms.id
     })  
-    document.getElementById("add-produce-form").addEventListener("submit", (e) => addProduceItem(e, farms))
+    document.getElementById("add-produce-form").addEventListener("submit", (e) => addProduceItem(e, farms)) 
 }
 
 function renderProduce(farms) {
@@ -64,7 +64,7 @@ function renderProduce(farms) {
 
         const addToCartButton = document.createElement("button")
               addToCartButton.innerText = "Add to Cart"
-              addToCartButton.id = itemCard.id
+              addToCartButton.name = itemCard.id
               addToCartButton.addEventListener("click", (e) =>{
                     fillCart(e, farms)
               })
@@ -73,19 +73,14 @@ function renderProduce(farms) {
               updateButton.innerText = "Update Item"
               updateButton.id = itemCard.id
               updateButton.addEventListener("click", () => {
-                    const update = document.getElementById("update-produce");
-                        //   update.id = ""
-                        //   update.id = itemCard.id
+                    const update = document.querySelector(".update-form")
+                          update.id = ""
+                          update.id = itemCard.id
                             if (update.style.display === "none") {
                                 update.style.display = "block";} 
                             else {
                                 update.style.display = "none";}
-                            })
-                            // debugger
-              updateButton.addEventListener("click", (e) =>{
-                    e.preventDefault()
-              })
-
+                            })       
         const deleteButton = document.createElement("button")
               deleteButton.innerText = "Delete Item"
               deleteButton.id = itemCard.id
@@ -145,7 +140,7 @@ function addProduceItem(e, farms) {
         method: "PATCH",
         body: JSON.stringify(spreadNewProduce),
     }
-    console.log(farmId)
+
     fetch(FARMS_URL+farmId, newObj)
         .then(res => res.json())
         .then(function(data){
@@ -153,26 +148,64 @@ function addProduceItem(e, farms) {
     })
 }
 
-function fillCart(e, farms) {
-
-    // const farmsId = farms.id
-    const cardId = e.target.id
-
-    const spread = [... farms.produce]
-    const addItem = spread.splice(cardId, 1)
-
-    const cartObj = {"name":addItem[0]["produceName"], "cost":addItem[0]["cost"], "qty":1}
-    // const qty = cartObj.qty
-    // const newQty = qty + 1
-
-    if (checkoutCart.indexOf("name") !== e.target.id)   
-       (checkoutCart.push(cartObj))
-    else iterateCart()
-
-    function iterateCart() {
-        for (i=0; i<checkoutCart.length; i++) {
-           const checkoutName = ""
+function updateProduceItem(farms) {
+    document.querySelector(".update-produce-form").addEventListener("submit", (e) => {
+    e.preventDefault()
+    //farm ID
+    //produce card ID
+    //
+        const farmId = farms.id
+        const cardId = e.target[5].id
+        debugger
+        const addNewProduce = {
+            produceName: e.target[0].value,
+            available: e.target[1].value,
+            quantity: +e.target[2].value,
+            cost: +e.target[3].value,
+            produceImage: e.target[4].value,
         }
-    }
+
+        const spread = [... farms.produce]
+        spread.push(addNewProduce)
+
+        const spreadNewProduce = {
+            produce: spread
+        }
+
+        const newObj = {
+            headers: {"Content-Type": "application/json"},
+            method: "PATCH",
+            body: JSON.stringify(),
+        }
+
+        fetch(FARMS_URL, newObj)
+            .then(res => res.json())
+            .then(function(data){
+                renderProduce(data)
+        })
+    }) 
 }
+
+// function fillCart(e, farms) {
+
+//     // const farmsId = farms.id
+//     const cardId = e.target.id
+
+//     const spread = [... farms.produce]
+//     const addItem = spread.splice(cardId, 1)
+
+//     const cartObj = {"name":addItem[0]["produceName"], "cost":addItem[0]["cost"], "qty":1}
+//     // const qty = cartObj.qty
+//     // const newQty = qty + 1
+
+//     if (checkoutCart.indexOf("name") !== e.target.id)   
+//        (checkoutCart.push(cartObj))
+//     else iterateCart()
+
+//     function iterateCart() {
+//         for (i=0; i<checkoutCart.length; i++) {
+//            const checkoutName = ""
+//         }
+//     }
+// }
 
