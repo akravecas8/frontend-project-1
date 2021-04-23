@@ -54,7 +54,7 @@ span {
   background: #eae6da;
 }
 
-.update-form {
+/* .update-form {
   border: 2px #045f39 solid;
   width: 250px;
   justify-content: center;
@@ -63,9 +63,9 @@ span {
   padding: 4px;
   margin: auto;
   background: #eae6da;
-}
+} */
 
-#update-produce {
+#update-produce-form {
   border: 2px #045f39 solid;
   width: 250px;
   justify-content: center;
