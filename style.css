@@ -1,10 +1,79 @@
-#farm-bar{
-    height: 80%;
-    width: 8vw;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 2em;
-    border: 1px solid blue;
-  }
+h1 {
+  font-size: 40px;
+  text-align: center;
+}
 
+span {
+  font-size: 20px;
+  height: 80%;
+  width: flex;
+  height: flex;
+  display: inline-flex;
+  justify-content: center;
+  align-content: center;
+  align-items: auto;
+  margin: auto;
+  border-radius: 4em;
+  border: 2px #045f39 solid;
+}
+
+#navvy {
+  display: inline-flex;
+  justify-content: center;
+  align-content: center;
+  text-align: center;
+  margin: auto
+}
+  
+.box {
+  border: 2px #045f39 solid;
+  width: 200px;
+  align-content: center;
+  text-align: center;
+  padding: 5px;
+  margin: 5px 5px;
+  background: #f5ebcd;
+  display: inline-block;
+}
+  
+.farmImg {
+  justify-self: center;
+  align-content: center;
+  height: 100px;
+  width: auto;
+}
+
+.form {
+  border: 2px #045f39 solid;
+  width: 250px;
+  justify-content: center;
+  align-content: center;
+  text-align: center;
+  padding: 4px;
+  margin: auto;
+  background: #eae6da;
+}
+
+#update-produce {
+  border: 2px #045f39 solid;
+  width: 250px;
+  justify-content: center;
+  align-content: center;
+  text-align: center;
+  padding: 4px;
+  margin: auto;
+  background: #eae6da;
+  display: none;
+}
+
+.add-produce-form {
+  padding: 2px;
+}
+
+form {
+  padding: 3px;
+}
+
+button {
+  padding: 2px;
+}

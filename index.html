@@ -4,16 +4,42 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script defer src="./script.js"></script>
+    <script defer src="./index.js"></script>
     <link rel="stylesheet" href="./style.css">
-    <link rel="stylesheet" href="https://bootswatch.com/4/lux/bootstrap.min.css">
     <title>Heck Yeah</title>
 </head>
 <body>
-    <nav class="navbar navbar-light bg-dark">
-        <a class="navbar-brand" href="#">Navbar</a>
-    </nav>
-    <div id="farm-bar">
+    <h1 id="website-headder">Farms R' Us: Inventory Management Systems</h1>
+    <div id=navvy></div>
+    <div id = "container">
+        <div id="farm-bar"></div>
+        <div id="farm-info"></div>
+        <div id="produce"></div>
+        <div id="shopping-cart"></div>
+        <div id="add-produce" class="form">
+            <h2>Add Produce</h2>
+            <form id="add-produce-form">
+                <input type="text" placeholder="Add Produce" id="form-produce" name="produce"/>
+                <input type="text" placeholder="In Stock? (yes/no)" id="form-stock" name="stock"/>
+                <input type="text" placeholder="Quantity in Stock" id="form-qty" name="qty" />
+                <input type="text" placeholder="Set Price" id="form-price" name="price"/>
+                <input type="text" placeholder="Set Image" id="form-image" name="image"/>
+                <input type="submit" value="Create Item" id="" class="create-item-button"/>
+            </form>
+        </div>
+        <div id="update-produce" class="form">
+            <h2>Update Produce</h2>
+            <form id="update-produce-form">
+                <input type="text" placeholder="Update Produce" id="update-form-produce" name="update-produce"/>
+                <input type="text" placeholder="Update Stock" id="update-form-stock" name="update-stock"/>
+                <input type="text" placeholder="Update in Stock" id="update-form-qty" name="update-qty" />
+                <input type="text" placeholder="Update Price" id="update-form-price" name="update-price"/>
+                <input type="text" placeholder="Update Image" id="update-form-image" name="update-image"/>
+                <input type="submit" value="Update Item" id="" class="update-item-button"/>
+            </form>
+        </div>
     </div>
 </body>
 </html>
+
+
