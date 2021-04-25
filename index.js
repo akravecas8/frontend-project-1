@@ -3,14 +3,17 @@ CART_URL = "http://localhost:3000/cart/"
 
 const checkoutCart = [{}]
 
+// gather farm data from farm API
 fetch(FARMS_URL)
     .then (res => res.json())
     .then (data => data.forEach((farms) => {
         renderFarms(farms)
     }))
 
+// renders individual farm info in the nav bar
 function renderFarms(farms) {
 
+    // constructing the farm elements
     const farmSpan = document.createElement("span")
           farmSpan.id = farms.id
     const farmName = document.createElement("h3")
@@ -18,30 +21,42 @@ function renderFarms(farms) {
     const farmImg = document.createElement("img")
           farmImg.src = farms.image
           farmImg.className = "farmImg"
-                
+       
+    // appending the farm elements to the nav bar
     farmSpan.append(farmName, farmImg)          
     document.getElementById("navvy").append(farmSpan)
-          
-    farmSpan.addEventListener("click", () => {
-            renderProduce(farms)
+       
+    // adds EventListner to each farm
+    farmSpan.addEventListener("click", (e) => {
+            renderProduce(farms, e)
 
             const createBtnId = document.querySelector(".create-item-button")
                   createBtnId.id = ""
                   createBtnId.id = farms.id
+            const createUpdateBtnId = document.querySelector(".update-item-button")
+                  createUpdateBtnId.id = ""
+                  createUpdateBtnId.id = farms.id
     })  
+
+    // adds farm ID to form submission events
     document.getElementById("add-produce-form").addEventListener("submit", (e) => addProduceItem(e, farms)) 
+    document.querySelector(".update-form").addEventListener("submit", (e) => updateProduceItem(e, farms))
 }
 
-function renderProduce(farms) {
+// renders each produce item from targeted farm
+function renderProduce(farms, e) {
 
     document.querySelector("#produce").innerHTML = ""
 
+    // for loop iterates all subsequent information into a unique produce display card
     for (i=0; i < farms.produce.length; i++) {
 
+        // constructs the produce item card div and generates a unique ID for each
         const itemCard = document.createElement("div")
               itemCard.className = "box"
               itemCard.id = i
 
+        // populates the produce item card with information 
         const produceName = document.createElement("h2")
               produceName.innerText = farms.produce[i].produceName
         const produceAvail = document.createElement("h3")
@@ -62,6 +77,7 @@ function renderProduce(farms) {
         const produceImage = document.createElement("image")
               produceImage.src = produce.produceImage
 
+        // creates button for adding items to cart on the produce card
         const addToCartButton = document.createElement("button")
               addToCartButton.innerText = "Add to Cart"
               addToCartButton.name = itemCard.id
@@ -69,14 +85,14 @@ function renderProduce(farms) {
                     fillCart(e, farms)
               })
 
+        // creates button for the update produce form on the produce card
         const updateButton = document.createElement("button")
               updateButton.innerText = "Update Item"
               updateButton.id=itemCard.id
-                    updateButton.addEventListener("click", (e) => {
-                        document.querySelector(".update-form").id = e.target.id
+              updateButton.addEventListener("click", (e) => {
+                    document.querySelector(".update-form").id = e.target.id
                     })
               updateButton.addEventListener("click", (e) => {
-                //   debugger
                     const update = document.querySelector("#update-produce-form")
                         if (update.style.display === "none") {
                             update.style.display = "block";} 
@@ -84,6 +100,7 @@ function renderProduce(farms) {
                             update.style.display = "none";}
                             })
 
+        // creates button to delete a produce card on the produce card
         const deleteButton = document.createElement("button")
               deleteButton.innerText = "Delete Item"
               deleteButton.id = itemCard.id
@@ -93,17 +110,17 @@ function renderProduce(farms) {
                     const farmId = farms.id
                     const cardId = e.target.id
 
-                    const farmsProduce = [... farms.produce]
-                    farmsProduce.splice(cardId, 1)
+                    const produce = [... farms.produce]
+                          produce.splice(cardId, 1)
 
-                    const spreadNewProduce = {
-                        produce: farmsProduce
+                    const addProduce = {
+                        produce: produce
                     }
-
+      
                     const newObj = {
                         headers: {"Content-Type": "application/json"},
                         method: "PATCH",
-                        body: JSON.stringify(spreadNewProduce),
+                        body: JSON.stringify(addProduce),
                     }
 
                     fetch(FARMS_URL+farmId, newObj)
@@ -113,16 +130,20 @@ function renderProduce(farms) {
                     })
                })
        
+        // appends produce information to the produce item card and that to the container div
         itemCard.append(produceName, produceAvail, produceQuant, producePrice, produceImage, addToCartButton, updateButton, deleteButton)    
         document.getElementById("produce").append(itemCard)
     }
 }
 
+// creates PATCH logic for the add produce form
 function addProduceItem(e, farms) {
     e.preventDefault()
-
+ 
+    // tag ID of produce card to add produce form
     const farmId = e.target[5].id
 
+    // create new produce item inner HTML
     const addNewProduce = {
         produceName: e.target[0].value,
         available: e.target[1].value,
@@ -131,19 +152,24 @@ function addProduceItem(e, farms) {
         produceImage: e.target[4].value,
     }
 
-    const spread = [... farms.produce]
-    spread.push(addNewProduce)
+    // copy array of objects and add new produce item
+    const produce = [... farms.produce]
+          produce.push(addNewProduce)
 
+    // convert new array of objects into a whole object array
     const spreadNewProduce = {
-        produce: spread
+        produce: produce
     }
 
+    // refactor new object array into JSON
     const newObj = {
         headers: {"Content-Type": "application/json"},
         method: "PATCH",
         body: JSON.stringify(spreadNewProduce),
     }
 
+    // refactor HTTP address, add destination and PATCH existing data structure
+    // with new code
     fetch(FARMS_URL+farmId, newObj)
         .then(res => res.json())
         .then(function(data){
@@ -151,19 +177,14 @@ function addProduceItem(e, farms) {
     })
 }
 
-function updateProduceItem(farms) {
-    document.querySelector(".update-produce-form").addEventListener("submit", (e) => {
+// creates PATCH logic for the udpate produce form
+function updateProduceItem(e, farms) {
     e.preventDefault()
-    //farm ID
-    //produce card ID
-        const updateProduceForm = document.querySelector(".update-form")   
-              updateProduceForm.id = ""
-              updateProduceForm.id = itemCard.id
 
-        const farmId = farms.id
-        const cardId = e.target[5].id
-        debugger
-        const addNewProduce = {
+        const farmId = e.target[5].id
+        const cardId = e.target.id
+
+        const updateProduce = {
             produceName: e.target[0].value,
             available: e.target[1].value,
             quantity: +e.target[2].value,
@@ -171,27 +192,28 @@ function updateProduceItem(farms) {
             produceImage: e.target[4].value,
         }
 
-        const spread = [... farms.produce]
-        spread.push(addNewProduce)
+        const produce = [... farms.produce]
+              produce.splice(cardId, 1)
+              produce.push(updateProduce)
 
-        const spreadNewProduce = {
-            produce: spread
+        const updatedProduce = {
+            produce: produce
         }
-
+        
         const newObj = {
             headers: {"Content-Type": "application/json"},
             method: "PATCH",
-            body: JSON.stringify(),
+            body: JSON.stringify(updatedProduce),
         }
 
-        fetch(FARMS_URL, newObj)
+        fetch(FARMS_URL+farmId, newObj)
             .then(res => res.json())
             .then(function(data){
                 renderProduce(data)
         })
-    }) 
 }
 
+// creates logic for the fill cart feature
 // function fillCart(e, farms) {
 
 //     // const farmsId = farms.id
